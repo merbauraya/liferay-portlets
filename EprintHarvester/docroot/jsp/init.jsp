@@ -30,7 +30,8 @@
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.Validator" %>
 <%@ page import="com.liferay.portal.security.permission.ActionKeys"%>
-<%@page import="java.net.URL" %>
+<%@ page import="java.net.URL" %>
+<%@ page import="java.net.URLEncoder" %>
 <%@page import="java.io.*" %>
 <%@page import="com.idetronic.portlet.XslTransformer" %>
 <%@page import="com.liferay.portal.kernel.util.StringUtil" %>

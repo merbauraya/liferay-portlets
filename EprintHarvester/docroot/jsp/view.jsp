@@ -36,7 +36,11 @@
 	xslUrl = StringUtil.replace(xslUrl,"@portal_url@", themeDisplay.getPortalURL());
 	
 	if (rAction != null && rAction.equalsIgnoreCase("ListRecord"))
+	{
 		sourceXML += "?verb=ListRecords&metadataPrefix=oai_dc";
+
+		
+	}
 	
 	if (rAction != null && rAction.equalsIgnoreCase("bySubject"))
 	{
@@ -51,10 +55,13 @@
 	if (verb != null) //user requesting detail record
 	{
 		sourceXML = eprintURL;
-		sourceXML += "?verb="+verb + "&set="+set + "&metadataPrefix="+metadataPrefix;
+		sourceXML += "?verb="+verb;
+		if (set != null && metadataPrefix != null)
+			sourceXML += "&set="+set + "&metadataPrefix="+metadataPrefix;
 	}
-	//out.println("verb="+verb);
-	//out.println(sourceXML);
+	if (resumptionToken != null)
+		sourceXML += "&resumptionToken="+ URLEncoder.encode(resumptionToken,"UTF-8");
+
 	prm.put("portletURL", portletURL);
 	if (rAction == null && verb == null)
 	{
@@ -69,9 +76,19 @@
 	if (rAction != null)
 	{	
 		if (rAction.equalsIgnoreCase("bysubject"))
+		{
 			title = "Browsing by subject";
+			String subject = PortalUtil.getOriginalServletRequest(request).getParameter("subject");
+			if (subject != null)
+				title += " : "+subject;
+		}
 		if (rAction.equalsIgnoreCase("byType"))
+		{
 			title = "Browsing by Type";
+			String _type = PortalUtil.getOriginalServletRequest(request).getParameter("_type");
+			if (_type != null)
+				title += " : "+_type;
+		}
 	}
 %>
 
