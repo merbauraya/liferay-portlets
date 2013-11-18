@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.idetronic.portlet.model.UserImportLog">
+		<field name="entryId" type="long" />
+		<field name="startTime" type="Date" />
+		<field name="endTime" type="Date" />
+		<field name="totalProcess" type="long" />
+		<field name="totalImport" type="long" />
+		<field name="totalError" type="long" />
+		<field name="summary" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="totalExisting" type="Long" />
+	</model>
+</model-hints>

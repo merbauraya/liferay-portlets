@@ -1,0 +1,28 @@
+<Context
+	antiJARLocking="true"
+	antiResourceLocking="true"
+	crossContext="true">
+	
+	
+	
+	<Resource name="jdbc/sims" auth="Container" type="javax.sql.DataSource"
+              username="ekms" url="jdbc:jtds:sqlserver://10.3.8.16:1433/dblibrary"
+              password="ekms"
+              driverClassName="net.sourceforge.jtds.jdbc.Driver"
+              maxActive="20" maxIdle="10"/>  
+<!--
+  <Resource global="jdbc/sims" name="jdbc/sims" auth="Container" type="javax.sql.DataSource"
+               maxActive="20" maxIdle="30" maxWait="10000"
+               username="lportal" password="lportal123" 
+               driverClassName="com.mysql.jdbc.Driver"
+               url="jdbc:mysql://localhost:3306/sims"/>
+               
+              
+	<Resource name="jdbc/simsx" auth="Container" type="javax.sql.DataSource"
+              username="lms" url="jdbc:postgresql://localhost:5432/lms"
+              password="saga123"
+              driverClassName="org.postgresql.Driver"
+              maxActive="20" maxIdle="10"/>               
+ -->
+</Context>
+

@@ -1,0 +1,1 @@
+create unique index IX_F6905F7D on FAQ_FAQEntry (category);
