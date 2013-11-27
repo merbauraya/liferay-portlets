@@ -11,6 +11,13 @@
 	PortletURL viewURL = renderResponse.createRenderURL();
 	viewURL.setParameter("jspPage", "/jsp/viewfaq.jsp");
 	
+	
+	PortletURL orderCatURL = renderResponse.createRenderURL();
+	orderCatURL.setParameter("jspPage", "/jsp/catorder.jsp");
+	
+	PortletURL orderQuestionURL = renderResponse.createRenderURL();
+	orderQuestionURL.setParameter("jspPage", "/jsp/questionorder.jsp");
+	
 	PortletURL addURL = renderResponse.createRenderURL();
 	addURL.setParameter("jspPage",FAQConstant.EDIT_FAQ);
 	addURL.setParameter("backURL", themeDisplay.getURLCurrent());
@@ -26,7 +33,8 @@
 <a class="btn btn-primary" href="<%= entryURL %>">New FAQ Entry</a>&nbsp; 
 <a class="btn btn-primary" href="<%= listURL %>">List FAQ</a>&nbsp; 
 <a class="btn btn-primary" href="<%= viewURL %>">View FAQ</a>&nbsp; 
-
+<a class="btn btn-primary" href="<%= orderCatURL %>">Category Display Order</a>&nbsp; 
+<a class="btn btn-primary" href="<%= orderQuestionURL %>">Question Display Order</a>&nbsp; 
 <%
 	List<Object> catList = FAQEntryLocalServiceUtil.getCategory();
 	Integer delta = 20;
@@ -70,7 +78,7 @@
 		deleteCatURL.setParameter("category", (String) row[0]);
 		out.println((String) row[0]);
 		out.println("</td><td>");
-		out.print((Long) row[1]);
+		out.print((Long) row[2]);
 		out.println("</td><td>"); 
 		
 	%>

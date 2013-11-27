@@ -14,5 +14,6 @@
 		<field name="answer" type="String" />
 		<field name="isactive" type="Boolean" />
 		<field name="displayorder" type="long" />
+		<field name="categoryOrder" type="long" />
 	</model>
 </model-hints>

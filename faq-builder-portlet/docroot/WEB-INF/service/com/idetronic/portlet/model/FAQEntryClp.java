@@ -80,6 +80,7 @@ public class FAQEntryClp extends BaseModelImpl<FAQEntry> implements FAQEntry {
 		attributes.put("answer", getAnswer());
 		attributes.put("isactive", getIsactive());
 		attributes.put("displayorder", getDisplayorder());
+		attributes.put("categoryOrder", getCategoryOrder());
 
 		return attributes;
 	}
@@ -156,6 +157,12 @@ public class FAQEntryClp extends BaseModelImpl<FAQEntry> implements FAQEntry {
 
 		if (displayorder != null) {
 			setDisplayorder(displayorder);
+		}
+
+		Long categoryOrder = (Long)attributes.get("categoryOrder");
+
+		if (categoryOrder != null) {
+			setCategoryOrder(categoryOrder);
 		}
 	}
 
@@ -419,6 +426,27 @@ public class FAQEntryClp extends BaseModelImpl<FAQEntry> implements FAQEntry {
 		}
 	}
 
+	public long getCategoryOrder() {
+		return _categoryOrder;
+	}
+
+	public void setCategoryOrder(long categoryOrder) {
+		_categoryOrder = categoryOrder;
+
+		if (_faqEntryRemoteModel != null) {
+			try {
+				Class<?> clazz = _faqEntryRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setCategoryOrder", long.class);
+
+				method.invoke(_faqEntryRemoteModel, categoryOrder);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
 	public BaseModel<?> getFAQEntryRemoteModel() {
 		return _faqEntryRemoteModel;
 	}
@@ -503,22 +531,43 @@ public class FAQEntryClp extends BaseModelImpl<FAQEntry> implements FAQEntry {
 		clone.setAnswer(getAnswer());
 		clone.setIsactive(getIsactive());
 		clone.setDisplayorder(getDisplayorder());
+		clone.setCategoryOrder(getCategoryOrder());
 
 		return clone;
 	}
 
 	public int compareTo(FAQEntry faqEntry) {
-		long primaryKey = faqEntry.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		if (getCategoryOrder() < faqEntry.getCategoryOrder()) {
+			value = -1;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
+		else if (getCategoryOrder() > faqEntry.getCategoryOrder()) {
+			value = 1;
 		}
 		else {
-			return 0;
+			value = 0;
 		}
+
+		if (value != 0) {
+			return value;
+		}
+
+		if (getDisplayorder() < faqEntry.getDisplayorder()) {
+			value = -1;
+		}
+		else if (getDisplayorder() > faqEntry.getDisplayorder()) {
+			value = 1;
+		}
+		else {
+			value = 0;
+		}
+
+		if (value != 0) {
+			return value;
+		}
+
+		return 0;
 	}
 
 	@Override
@@ -550,7 +599,7 @@ public class FAQEntryClp extends BaseModelImpl<FAQEntry> implements FAQEntry {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{entryId=");
 		sb.append(getEntryId());
@@ -576,13 +625,15 @@ public class FAQEntryClp extends BaseModelImpl<FAQEntry> implements FAQEntry {
 		sb.append(getIsactive());
 		sb.append(", displayorder=");
 		sb.append(getDisplayorder());
+		sb.append(", categoryOrder=");
+		sb.append(getCategoryOrder());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("<model><model-name>");
 		sb.append("com.idetronic.portlet.model.FAQEntry");
@@ -636,6 +687,10 @@ public class FAQEntryClp extends BaseModelImpl<FAQEntry> implements FAQEntry {
 			"<column><column-name>displayorder</column-name><column-value><![CDATA[");
 		sb.append(getDisplayorder());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>categoryOrder</column-name><column-value><![CDATA[");
+		sb.append(getCategoryOrder());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -655,5 +710,6 @@ public class FAQEntryClp extends BaseModelImpl<FAQEntry> implements FAQEntry {
 	private String _answer;
 	private Boolean _isactive;
 	private long _displayorder;
+	private long _categoryOrder;
 	private BaseModel<?> _faqEntryRemoteModel;
 }

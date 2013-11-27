@@ -153,6 +153,14 @@ public class FAQEntryLocalServiceClpInvoker {
 		_methodName49 = "getByCategory";
 
 		_methodParameterTypes49 = new String[] { "java.lang.String" };
+
+		_methodName50 = "updateCategoryOrder";
+
+		_methodParameterTypes50 = new String[] { "java.lang.String", "int" };
+
+		_methodName51 = "updateQuestionOrder";
+
+		_methodParameterTypes51 = new String[] { "long", "int" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -305,6 +313,22 @@ public class FAQEntryLocalServiceClpInvoker {
 			return FAQEntryLocalServiceUtil.getByCategory((java.lang.String)arguments[0]);
 		}
 
+		if (_methodName50.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes50, parameterTypes)) {
+			FAQEntryLocalServiceUtil.updateCategoryOrder((java.lang.String)arguments[0],
+				((Integer)arguments[1]).intValue());
+
+			return null;
+		}
+
+		if (_methodName51.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes51, parameterTypes)) {
+			FAQEntryLocalServiceUtil.updateQuestionOrder(((Long)arguments[0]).longValue(),
+				((Integer)arguments[1]).intValue());
+
+			return null;
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -360,4 +384,8 @@ public class FAQEntryLocalServiceClpInvoker {
 	private String[] _methodParameterTypes48;
 	private String _methodName49;
 	private String[] _methodParameterTypes49;
+	private String _methodName50;
+	private String[] _methodParameterTypes50;
+	private String _methodName51;
+	private String[] _methodParameterTypes51;
 }

@@ -1,5 +1,5 @@
 <%@include file="/jsp/init.jsp" %>
- ZZZZZZZZZZZZZZZZZZZ
+
 <form action="<liferay-portlet:actionURL portletConfiguration="true" />"
 method="post" name="<portlet:namespace />fm">
  

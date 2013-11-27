@@ -248,6 +248,20 @@ public interface FAQEntryModel extends BaseModel<FAQEntry>, GroupedModel {
 	 */
 	public void setDisplayorder(long displayorder);
 
+	/**
+	 * Returns the category order of this f a q entry.
+	 *
+	 * @return the category order of this f a q entry
+	 */
+	public long getCategoryOrder();
+
+	/**
+	 * Sets the category order of this f a q entry.
+	 *
+	 * @param categoryOrder the category order of this f a q entry
+	 */
+	public void setCategoryOrder(long categoryOrder);
+
 	public boolean isNew();
 
 	public void setNew(boolean n);

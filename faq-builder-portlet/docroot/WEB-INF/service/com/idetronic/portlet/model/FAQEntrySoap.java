@@ -42,6 +42,7 @@ public class FAQEntrySoap implements Serializable {
 		soapModel.setAnswer(model.getAnswer());
 		soapModel.setIsactive(model.getIsactive());
 		soapModel.setDisplayorder(model.getDisplayorder());
+		soapModel.setCategoryOrder(model.getCategoryOrder());
 
 		return soapModel;
 	}
@@ -190,6 +191,14 @@ public class FAQEntrySoap implements Serializable {
 		_displayorder = displayorder;
 	}
 
+	public long getCategoryOrder() {
+		return _categoryOrder;
+	}
+
+	public void setCategoryOrder(long categoryOrder) {
+		_categoryOrder = categoryOrder;
+	}
+
 	private long _entryId;
 	private long _companyId;
 	private long _userId;
@@ -202,4 +211,5 @@ public class FAQEntrySoap implements Serializable {
 	private String _answer;
 	private Boolean _isactive;
 	private long _displayorder;
+	private long _categoryOrder;
 }

@@ -26,10 +26,14 @@
 		<column name="answer" type="String" />
 		<column name="isactive" type="Boolean" />
 		<column name="displayorder" type="long" />
-
-
+		<column name="categoryOrder" type="long" />
+	
 		<!-- Order -->
-
+		  <order by="asc">
+          		<order-column name="categoryOrder"/>
+          		<order-column name="displayorder"/>
+          </order>
+		
 
 
 	

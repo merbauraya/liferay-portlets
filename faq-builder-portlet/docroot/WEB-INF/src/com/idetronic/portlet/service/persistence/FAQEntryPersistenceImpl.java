@@ -311,6 +311,7 @@ public class FAQEntryPersistenceImpl extends BasePersistenceImpl<FAQEntry>
 		faqEntryImpl.setAnswer(faqEntry.getAnswer());
 		faqEntryImpl.setIsactive(faqEntry.getIsactive());
 		faqEntryImpl.setDisplayorder(faqEntry.getDisplayorder());
+		faqEntryImpl.setCategoryOrder(faqEntry.getCategoryOrder());
 
 		return faqEntryImpl;
 	}
@@ -486,7 +487,7 @@ public class FAQEntryPersistenceImpl extends BasePersistenceImpl<FAQEntry>
 				sql = query.toString();
 			}
 			else {
-				sql = _SQL_SELECT_FAQENTRY;
+				sql = _SQL_SELECT_FAQENTRY.concat(FAQEntryModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;

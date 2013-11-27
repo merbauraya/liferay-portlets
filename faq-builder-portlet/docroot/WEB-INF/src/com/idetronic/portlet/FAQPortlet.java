@@ -174,11 +174,46 @@ public class FAQPortlet extends MVCPortlet {
 			
 		}
 			
-		
-				 
-	
-		
-
 	}
+	public void saveQuestionOrder(ActionRequest actionRequest,
+		    ActionResponse actionResponse)
+		            throws IOException, PortletException {
+		
+		Log log = LogFactoryUtil.getLog(FAQPortlet.class);//  (LMSBookLocalServiceImpl.class);
+		String questions = ParamUtil.getString(actionRequest, "qorder");
+		String x = ParamUtil.getString(actionRequest,"formDate");
+		log.info("qorder="+questions+x);
+		
+		//split by ";" to get to format id=order
+		String[] qOrders  = questions.split(";");
+		for (String q: qOrders)
+		{
+			String[] questionAndOrder = q.split("=");
+			long qid = Long.parseLong(questionAndOrder[0]);
+			int qOrder = Integer.parseInt(questionAndOrder[1]);
+			FAQEntryLocalServiceUtil.updateQuestionOrder(qid, qOrder);
+			log.info("qid="+qid + ";order="+qOrder);
+					
+		}
+		
+	}
+	public void orderCategory(ActionRequest actionRequest,
+		    ActionResponse actionResponse)
+		            throws IOException, PortletException {
 
+		Log log = LogFactoryUtil.getLog(FAQPortlet.class);//  (LMSBookLocalServiceImpl.class);
+		//		get category list from our hidden field
+		String catList = ParamUtil.getString(actionRequest, "catList");
+		String[] categories = catList.split(",");
+		int catOrder;
+		for (String category: categories)
+		{
+			//get our order based on category name
+			catOrder = ParamUtil.getInteger(actionRequest, category);
+			log.info("cat="+category +" order="+ catOrder);
+			FAQEntryLocalServiceUtil.updateCategoryOrder(category, catOrder);
+			
+		}
+	
+	}
 }

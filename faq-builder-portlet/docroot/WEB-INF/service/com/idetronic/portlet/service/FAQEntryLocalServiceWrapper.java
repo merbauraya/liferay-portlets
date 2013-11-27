@@ -309,6 +309,14 @@ public class FAQEntryLocalServiceWrapper implements FAQEntryLocalService,
 		return _faqEntryLocalService.getByCategory(category);
 	}
 
+	public void updateCategoryOrder(java.lang.String category, int displayOrder) {
+		_faqEntryLocalService.updateCategoryOrder(category, displayOrder);
+	}
+
+	public void updateQuestionOrder(long id, int displayOrder) {
+		_faqEntryLocalService.updateQuestionOrder(id, displayOrder);
+	}
+
 	/**
 	 * @deprecated Renamed to {@link #getWrappedService}
 	 */

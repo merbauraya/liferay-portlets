@@ -25,6 +25,7 @@
 			<basic name="answer" />
 			<basic name="isactive" />
 			<basic name="displayorder" />
+			<basic name="categoryOrder" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

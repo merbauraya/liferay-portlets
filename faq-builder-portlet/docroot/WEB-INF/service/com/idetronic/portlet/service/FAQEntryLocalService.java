@@ -275,4 +275,8 @@ public interface FAQEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.idetronic.portlet.model.FAQEntry> getByCategory(
 		java.lang.String category);
+
+	public void updateCategoryOrder(java.lang.String category, int displayOrder);
+
+	public void updateQuestionOrder(long id, int displayOrder);
 }

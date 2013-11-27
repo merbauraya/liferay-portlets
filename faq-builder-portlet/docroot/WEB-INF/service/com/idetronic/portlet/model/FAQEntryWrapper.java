@@ -58,6 +58,7 @@ public class FAQEntryWrapper implements FAQEntry, ModelWrapper<FAQEntry> {
 		attributes.put("answer", getAnswer());
 		attributes.put("isactive", getIsactive());
 		attributes.put("displayorder", getDisplayorder());
+		attributes.put("categoryOrder", getCategoryOrder());
 
 		return attributes;
 	}
@@ -133,6 +134,12 @@ public class FAQEntryWrapper implements FAQEntry, ModelWrapper<FAQEntry> {
 
 		if (displayorder != null) {
 			setDisplayorder(displayorder);
+		}
+
+		Long categoryOrder = (Long)attributes.get("categoryOrder");
+
+		if (categoryOrder != null) {
+			setCategoryOrder(categoryOrder);
 		}
 	}
 
@@ -388,6 +395,24 @@ public class FAQEntryWrapper implements FAQEntry, ModelWrapper<FAQEntry> {
 	*/
 	public void setDisplayorder(long displayorder) {
 		_faqEntry.setDisplayorder(displayorder);
+	}
+
+	/**
+	* Returns the category order of this f a q entry.
+	*
+	* @return the category order of this f a q entry
+	*/
+	public long getCategoryOrder() {
+		return _faqEntry.getCategoryOrder();
+	}
+
+	/**
+	* Sets the category order of this f a q entry.
+	*
+	* @param categoryOrder the category order of this f a q entry
+	*/
+	public void setCategoryOrder(long categoryOrder) {
+		_faqEntry.setCategoryOrder(categoryOrder);
 	}
 
 	public boolean isNew() {

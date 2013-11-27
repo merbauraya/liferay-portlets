@@ -315,6 +315,15 @@ public class FAQEntryLocalServiceUtil {
 		return getService().getByCategory(category);
 	}
 
+	public static void updateCategoryOrder(java.lang.String category,
+		int displayOrder) {
+		getService().updateCategoryOrder(category, displayOrder);
+	}
+
+	public static void updateQuestionOrder(long id, int displayOrder) {
+		getService().updateQuestionOrder(id, displayOrder);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

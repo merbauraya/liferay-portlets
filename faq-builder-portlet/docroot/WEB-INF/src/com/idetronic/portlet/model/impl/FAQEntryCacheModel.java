@@ -34,7 +34,7 @@ import java.util.Date;
 public class FAQEntryCacheModel implements CacheModel<FAQEntry>, Serializable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{entryId=");
 		sb.append(entryId);
@@ -60,6 +60,8 @@ public class FAQEntryCacheModel implements CacheModel<FAQEntry>, Serializable {
 		sb.append(isactive);
 		sb.append(", displayorder=");
 		sb.append(displayorder);
+		sb.append(", categoryOrder=");
+		sb.append(categoryOrder);
 		sb.append("}");
 
 		return sb.toString();
@@ -118,6 +120,7 @@ public class FAQEntryCacheModel implements CacheModel<FAQEntry>, Serializable {
 
 		faqEntryImpl.setIsactive(isactive);
 		faqEntryImpl.setDisplayorder(displayorder);
+		faqEntryImpl.setCategoryOrder(categoryOrder);
 
 		faqEntryImpl.resetOriginalValues();
 
@@ -136,4 +139,5 @@ public class FAQEntryCacheModel implements CacheModel<FAQEntry>, Serializable {
 	public String answer;
 	public Boolean isactive;
 	public long displayorder;
+	public long categoryOrder;
 }

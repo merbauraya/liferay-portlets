@@ -10,5 +10,6 @@ create table FAQ_FAQEntry (
 	category VARCHAR(75) null,
 	answer VARCHAR(75) null,
 	isactive BOOLEAN,
-	displayorder LONG
+	displayorder LONG,
+	categoryOrder LONG
 );

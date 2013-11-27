@@ -83,7 +83,9 @@ public class FAQEntryLocalServiceImpl extends FAQEntryLocalServiceBaseImpl {
 		faq.setGroupId(serviceContext.getScopeGroupId());
 		faq.setCompanyId(serviceContext.getCompanyId());
 		faq.setUserId(serviceContext.getUserId());
-
+		long categoryOrder = getCategoryOrder(category);
+		faq.setCategoryOrder(categoryOrder);
+		
 		// lmsBook.setGroupId(serviceContext.getScopeGroupId());
 		try {
 			faq = faqEntryPersistence.update(faq, false);
@@ -180,6 +182,7 @@ public class FAQEntryLocalServiceImpl extends FAQEntryLocalServiceBaseImpl {
 		DynamicQuery query = DynamicQueryFactoryUtil.forClass(FAQEntry.class);
 		query.setProjection(ProjectionFactoryUtil.projectionList()
 				.add(ProjectionFactoryUtil.groupProperty("category"))
+				.add(ProjectionFactoryUtil.groupProperty("categoryOrder"))
 				.add(ProjectionFactoryUtil.count("category")));
 
 		// DynamicQuery query =
@@ -187,7 +190,7 @@ public class FAQEntryLocalServiceImpl extends FAQEntryLocalServiceBaseImpl {
 
 		// query.setProjection(ProjectionFactoryUtil.distinct(ProjectionFactoryUtil.property("category")));
 		// query.setProjection(ProjectionFactoryUtil.count("category"));
-		// query.addOrder(OrderFactoryUtil.asc("displayOrder"));
+		query.addOrder(OrderFactoryUtil.asc("categoryOrder"));
 
 		try {
 			// catList = dynamicQuery(query);
@@ -207,7 +210,7 @@ public class FAQEntryLocalServiceImpl extends FAQEntryLocalServiceBaseImpl {
 
 		query.add(PropertyFactoryUtil.forName("isactive").eq(true));
 		// query.add(RestrictionsFactoryUtil.eq("isactive", true));
-		query.addOrder(OrderFactoryUtil.asc("category"));
+		query.addOrder(OrderFactoryUtil.asc("categoryOrder"));
 		query.addOrder(OrderFactoryUtil.asc("displayorder"));
 		try {
 			List<FAQEntry> faqs = dynamicQuery(query);
@@ -226,7 +229,7 @@ public class FAQEntryLocalServiceImpl extends FAQEntryLocalServiceBaseImpl {
 		query.add(RestrictionsFactoryUtil.in("category",inCondition));//
 
 		// query.add(PropertyFactoryUtil.forName("category").eq(category));
-		query.addOrder(OrderFactoryUtil.asc("category"));
+		//query.addOrder(OrderFactoryUtil.asc("category"));
 		query.addOrder(OrderFactoryUtil.asc("displayorder"));
 
 		try {
@@ -238,5 +241,67 @@ public class FAQEntryLocalServiceImpl extends FAQEntryLocalServiceBaseImpl {
 			return null;
 
 		}
+	}
+	public void updateCategoryOrder(String category,int displayOrder)
+	{
+		
+		List<FAQEntry> faqs = getByCategory(category);
+		for (FAQEntry faq: faqs)
+		{
+			faq.setCategoryOrder(displayOrder);
+			try {
+				updateFAQEntry(faq);
+			} catch (SystemException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	public void updateQuestionOrder(long id,int displayOrder)
+	{
+		FAQEntry faq = null;
+		try {
+			faq = fetchFAQEntry(id);
+		} catch (SystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (Validator.isNotNull(faq))
+		{
+			faq.setDisplayorder(displayOrder);
+			try {
+				faq = updateFAQEntry(faq);
+			} catch (SystemException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	private long getCategoryOrder(String category)
+	{
+		DynamicQuery query = DynamicQueryFactoryUtil.forClass(FAQEntry.class);
+		query.add(RestrictionsFactoryUtil.eq("category",category));
+		query.add(RestrictionsFactoryUtil.isNotNull("categoryOrder"));
+		query.setLimit(0, 1);
+		long categoryOrder =0;
+		try {
+			List<FAQEntry> faqs = dynamicQuery(query);
+			for (FAQEntry faq: faqs)
+			{
+				categoryOrder = faq.getCategoryOrder();
+			}
+			
+		} catch (SystemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return categoryOrder;
+		
+		
+		
+				
+		
 	}
 }

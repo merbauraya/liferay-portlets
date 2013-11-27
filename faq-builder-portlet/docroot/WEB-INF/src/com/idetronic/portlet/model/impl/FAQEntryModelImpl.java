@@ -72,10 +72,13 @@ public class FAQEntryModelImpl extends BaseModelImpl<FAQEntry>
 			{ "category", Types.VARCHAR },
 			{ "answer", Types.VARCHAR },
 			{ "isactive", Types.BOOLEAN },
-			{ "displayorder", Types.BIGINT }
+			{ "displayorder", Types.BIGINT },
+			{ "categoryOrder", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table FAQ_FAQEntry (entryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,groupId LONG,question VARCHAR(75) null,category VARCHAR(75) null,answer VARCHAR(75) null,isactive BOOLEAN,displayorder LONG)";
+	public static final String TABLE_SQL_CREATE = "create table FAQ_FAQEntry (entryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,groupId LONG,question VARCHAR(75) null,category VARCHAR(75) null,answer VARCHAR(75) null,isactive BOOLEAN,displayorder LONG,categoryOrder LONG)";
 	public static final String TABLE_SQL_DROP = "drop table FAQ_FAQEntry";
+	public static final String ORDER_BY_JPQL = " ORDER BY faqEntry.categoryOrder ASC, faqEntry.displayorder ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY FAQ_FAQEntry.categoryOrder ASC, FAQ_FAQEntry.displayorder ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -132,6 +135,7 @@ public class FAQEntryModelImpl extends BaseModelImpl<FAQEntry>
 		attributes.put("answer", getAnswer());
 		attributes.put("isactive", getIsactive());
 		attributes.put("displayorder", getDisplayorder());
+		attributes.put("categoryOrder", getCategoryOrder());
 
 		return attributes;
 	}
@@ -208,6 +212,12 @@ public class FAQEntryModelImpl extends BaseModelImpl<FAQEntry>
 
 		if (displayorder != null) {
 			setDisplayorder(displayorder);
+		}
+
+		Long categoryOrder = (Long)attributes.get("categoryOrder");
+
+		if (categoryOrder != null) {
+			setCategoryOrder(categoryOrder);
 		}
 	}
 
@@ -335,6 +345,14 @@ public class FAQEntryModelImpl extends BaseModelImpl<FAQEntry>
 		_displayorder = displayorder;
 	}
 
+	public long getCategoryOrder() {
+		return _categoryOrder;
+	}
+
+	public void setCategoryOrder(long categoryOrder) {
+		_categoryOrder = categoryOrder;
+	}
+
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
@@ -378,6 +396,7 @@ public class FAQEntryModelImpl extends BaseModelImpl<FAQEntry>
 		faqEntryImpl.setAnswer(getAnswer());
 		faqEntryImpl.setIsactive(getIsactive());
 		faqEntryImpl.setDisplayorder(getDisplayorder());
+		faqEntryImpl.setCategoryOrder(getCategoryOrder());
 
 		faqEntryImpl.resetOriginalValues();
 
@@ -385,17 +404,37 @@ public class FAQEntryModelImpl extends BaseModelImpl<FAQEntry>
 	}
 
 	public int compareTo(FAQEntry faqEntry) {
-		long primaryKey = faqEntry.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		if (getCategoryOrder() < faqEntry.getCategoryOrder()) {
+			value = -1;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
+		else if (getCategoryOrder() > faqEntry.getCategoryOrder()) {
+			value = 1;
 		}
 		else {
-			return 0;
+			value = 0;
 		}
+
+		if (value != 0) {
+			return value;
+		}
+
+		if (getDisplayorder() < faqEntry.getDisplayorder()) {
+			value = -1;
+		}
+		else if (getDisplayorder() > faqEntry.getDisplayorder()) {
+			value = 1;
+		}
+		else {
+			value = 0;
+		}
+
+		if (value != 0) {
+			return value;
+		}
+
+		return 0;
 	}
 
 	@Override
@@ -495,12 +534,14 @@ public class FAQEntryModelImpl extends BaseModelImpl<FAQEntry>
 
 		faqEntryCacheModel.displayorder = getDisplayorder();
 
+		faqEntryCacheModel.categoryOrder = getCategoryOrder();
+
 		return faqEntryCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{entryId=");
 		sb.append(getEntryId());
@@ -526,13 +567,15 @@ public class FAQEntryModelImpl extends BaseModelImpl<FAQEntry>
 		sb.append(getIsactive());
 		sb.append(", displayorder=");
 		sb.append(getDisplayorder());
+		sb.append(", categoryOrder=");
+		sb.append(getCategoryOrder());
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("<model><model-name>");
 		sb.append("com.idetronic.portlet.model.FAQEntry");
@@ -586,6 +629,10 @@ public class FAQEntryModelImpl extends BaseModelImpl<FAQEntry>
 			"<column><column-name>displayorder</column-name><column-value><![CDATA[");
 		sb.append(getDisplayorder());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>categoryOrder</column-name><column-value><![CDATA[");
+		sb.append(getCategoryOrder());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -609,5 +656,6 @@ public class FAQEntryModelImpl extends BaseModelImpl<FAQEntry>
 	private String _answer;
 	private Boolean _isactive;
 	private long _displayorder;
+	private long _categoryOrder;
 	private FAQEntry _escapedModel;
 }
